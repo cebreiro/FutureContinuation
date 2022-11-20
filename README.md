@@ -35,7 +35,7 @@ auto coroutine = [&]() -> Future<int32_t>
 {
 	thread1 = std::this_thread::get_id();
 
-	result1 = co_await StartAsync([]()
+	result1 = co_await Post([]()
 		{
 			return expected1;
 
@@ -43,7 +43,7 @@ auto coroutine = [&]() -> Future<int32_t>
 
 	thread2 = std::this_thread::get_id();
 
-	result2 = co_await StartAsync([]()
+	result2 = co_await Post([]()
 		{
 			return expected2;
 		});

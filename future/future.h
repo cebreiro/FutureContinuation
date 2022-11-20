@@ -52,7 +52,7 @@ namespace cebreiro
 	};
 
 	template <typename Callable, typename Result = typename detail::CallableTraits<Callable>::result_type>
-	auto StartAsync(Callable&& callable, Executor& executor = Executor::GetDefault(), const ExecuteOption& option = ExecuteOption{})
+	auto Post(Callable&& callable, Executor& executor = Executor::GetDefault(), const ExecuteOption& option = ExecuteOption{})
 		-> Future<Result>
 	{
 		ExecutionContext<Result> context(std::make_shared<detail::ExecutionContextImpl<Result>>());

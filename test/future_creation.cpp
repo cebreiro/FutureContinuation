@@ -41,14 +41,14 @@ TEST(FutureCreation, CreateFromCallable)
 
 	// act
 	int32_t value = futureCreationTestExpected;
-	Future<int32_t> f1 = StartAsync([value]() { return value; }, executor);
-	Future<int32_t> f2 = StartAsync(futureCreationTestFunction, executor);
+	Future<int32_t> f1 = Post([value]() { return value; }, executor);
+	Future<int32_t> f2 = Post(futureCreationTestFunction, executor);
 
 	BindTestClass1 btc1{ .value = futureCreationTestExpected };
-	Future<int32_t> f3 = StartAsync(std::bind(&BindTestClass1::Method, btc1), executor);
+	Future<int32_t> f3 = Post(std::bind(&BindTestClass1::Method, btc1), executor);
 
 	FunctionObjectClass fo{ .value = futureCreationTestExpected };
-	Future<int32_t> f4 = StartAsync(fo, executor);
+	Future<int32_t> f4 = Post(fo, executor);
 
 	// assert
 	ASSERT_EQ(f1.Get(), futureCreationTestExpected);

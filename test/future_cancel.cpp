@@ -12,7 +12,7 @@ TEST(FutureCancel, Single)
 	TestExecutor& executor = *e;
 
 	// act
-	Future<void> fut = StartAsync([]()
+	Future<void> fut = Post([]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}, executor);
@@ -34,7 +34,7 @@ TEST(FutureCancel, Propagation)
 	TestExecutor& executor = *e;
 
 	// act
-	Future<void> fut1 = StartAsync([]()
+	Future<void> fut1 = Post([]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}, executor);

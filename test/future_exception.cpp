@@ -14,7 +14,7 @@ TEST(FutureException, CallableThrows)
 	TestExecutor& executor = *e;
 
 	// act
-	Future<void> future = StartAsync([]()
+	Future<void> future = Post([]()
 		{
 			throw std::runtime_error("test");
 		}, executor);
@@ -63,7 +63,7 @@ TEST(FutureException, Propagation)
 	bool execute2 = false;
 
 	// act
-	auto fut = StartAsync([]()
+	auto fut = Post([]()
 		{
 			throw std::runtime_error("execption");
 		}, executor)

@@ -32,7 +32,7 @@ TEST(FutureAwait, StartCoroutine)
 	{
 		thread1 = std::this_thread::get_id();
 
-		result1 = co_await StartAsync([]()
+		result1 = co_await Post([]()
 			{
 				return expected1;
 
@@ -40,7 +40,7 @@ TEST(FutureAwait, StartCoroutine)
 
 		thread2 = std::this_thread::get_id();
 
-		result2 = co_await StartAsync([]()
+		result2 = co_await Post([]()
 			{
 				return expected2;
 			});
@@ -79,7 +79,7 @@ TEST(FutureAwait, CancelCoroutine)
 	// act
 	auto coroutine = [&]() -> Future<void>
 	{
-		co_await StartAsync([]()
+		co_await Post([]()
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
@@ -96,7 +96,7 @@ TEST(FutureAwait, CancelCoroutine)
 		flag2.notify_one();
 
 		// awaiter will throw canceled exception
-		co_await StartAsync([]()
+		co_await Post([]()
 			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			});

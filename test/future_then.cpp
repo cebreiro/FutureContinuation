@@ -20,7 +20,7 @@ TEST(FutureThen, VoidParam)
 	// act
 
 	std::thread::id thread1;
-	Future<std::unique_ptr<size_t>> f1 = StartAsync([&]()
+	Future<std::unique_ptr<size_t>> f1 = Post([&]()
 		{
 			thread1 = std::this_thread::get_id();
 			return std::make_unique<size_t>(expected1);
@@ -56,7 +56,7 @@ TEST(FutureThen, SingleParam)
 	TestExecutor& executor = *e;
 
 	// act
-	Future<std::unique_ptr<size_t>> f1 = StartAsync([]()
+	Future<std::unique_ptr<size_t>> f1 = Post([]()
 		{
 			return std::make_unique<size_t>(expected1);
 		}, executor);

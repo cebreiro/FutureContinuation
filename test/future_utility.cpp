@@ -21,21 +21,21 @@ TEST(FutureUtility, WaitAll)
 	TestExecutor& executor3 = *e2;
 	
 	// act
-	Future<size_t> f1 = StartAsync([]()
+	Future<size_t> f1 = Post([]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			return expected1;
 
 		}, executor1);
 
-	Future<size_t> f2 = StartAsync([]()
+	Future<size_t> f2 = Post([]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 			return expected2;
 
 		}, executor2);
 
-	Future<size_t> f3 = StartAsync([]()
+	Future<size_t> f3 = Post([]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(40));
 			return expected3;
@@ -77,19 +77,19 @@ TEST(FutureUtility, WaitAny)
 	size_t count3 = 0;
 
 	// act
-	Future<void> f1 = StartAsync([&]()
+	Future<void> f1 = Post([&]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			count1 = counter.fetch_add(1) + 1;
 		}, executor1);
 
-	Future<void> f2 = StartAsync([&]()
+	Future<void> f2 = Post([&]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			count2 = counter.fetch_add(1) + 1;
 		}, executor2);
 
-	Future<void> f3 = StartAsync([&]()
+	Future<void> f3 = Post([&]()
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 			count3 = counter.fetch_add(1) + 1;

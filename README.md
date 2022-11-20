@@ -4,7 +4,7 @@ because C++ has no 'executor', std::future has no 'then' method.
 
 because std::future has no 'then' method, Despite the presence of coroutine, C++ has no async-await pattern.
 
-this repository will show you that awaitable future object by defining 'custom' executor.
+this repository will show you awaitable future object by defining 'custom' executor.
 
 ## Build
 ### CMake

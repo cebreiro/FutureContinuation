@@ -11,6 +11,7 @@ target_sources(future PRIVATE
 promise.cpp
 executor.cpp
 default_executor.cpp
+future.cpp
 )
 
 add_subdirectory(detail)

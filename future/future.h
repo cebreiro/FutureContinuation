@@ -4,6 +4,10 @@
 #include "future/detail/move_only_wrapper.h"
 #include "future/execute_options.h"
 
+#ifdef WIN32
+#include <Windows.h>
+#endif
+
 namespace cebreiro
 {
 	class Executor;
@@ -75,6 +79,56 @@ namespace cebreiro
 
 		return Future(std::move(context));
 	}
+
+	template <typename... Futures>
+	auto WaitAll(Futures&&... futures) -> Future<void>
+	{
+		static constexpr size_t count = sizeof...(Futures);
+
+		auto counter = std::make_shared<std::atomic<size_t>>(0);
+		ExecutionContext<void> context(std::make_shared<detail::ExecutionContextImpl<void>>());
+
+		auto fn = [counter, context]<typename T>(Future<T>&fut) mutable
+		{
+			fut.ContinuationWith([counter, context]([[maybe_unused]] Future<T>& self) mutable
+				{
+					size_t current = counter->fetch_add(1) + 1;
+					if (current == count)
+					{
+						context.Set();
+					}
+				});
+		};
+
+		(fn(futures), ...);
+
+		return Future<void>(std::move(context));
+	}
+
+	template <typename... Futures>
+	auto WaitAny(Futures&&... futures) -> Future<void>
+	{
+		auto counter = std::make_shared<std::atomic<size_t>>(0);
+		ExecutionContext<void> context(std::make_shared<detail::ExecutionContextImpl<void>>());
+
+		auto fn = [counter, context]<typename T>(Future<T>&fut) mutable
+		{
+			fut.ContinuationWith([counter, context]([[maybe_unused]] Future<T>& self) mutable
+				{
+					size_t current = counter->fetch_add(1) + 1;
+					if (current == 1)
+					{
+						context.Set();
+					}
+				});
+		};
+
+		(fn(futures), ...);
+
+		return Future<void>(std::move(context));
+	}
+
+	auto Delay(uint64_t milliseconds) -> Future<void>;
 }
 
 #include "future/future.ipp"

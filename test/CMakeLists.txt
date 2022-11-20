@@ -6,6 +6,7 @@ future_then.cpp
 future_exception.cpp
 future_cancel.cpp
 future_await.cpp
+future_utility.cpp
 )
 
 include(FetchContent)

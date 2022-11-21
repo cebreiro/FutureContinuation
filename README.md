@@ -14,7 +14,7 @@ cmake --build ./build
 ```
 gtest library dependency will be automatically managed by CMake.
 
-## quick exmaple
+## Quick Exmaple
 ```cpp
 // arrange
 std::shared_ptr<TestExecutor> e = CreateExecutor();

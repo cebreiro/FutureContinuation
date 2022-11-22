@@ -6,14 +6,6 @@ because std::future has no 'then' method, Despite the presence of coroutine, C++
 
 this repository will show you awaitable future object by defining 'custom' executor.
 
-## Build
-### CMake
-```cmake
-cmake -B ./build -S ./
-cmake --build ./build
-```
-gtest library dependency will be automatically managed by CMake.
-
 ## Quick Exmaple
 ```cpp
 // arrange
@@ -64,3 +56,11 @@ ASSERT_EQ(result1, expected1);
 ASSERT_EQ(result2, expected2);
 ASSERT_EQ(result3, expected3);
 ```
+
+## Build
+### CMake
+```cmake
+cmake -B ./out/build -S ./
+cmake --build ./out/build
+```
+gtest library dependency will be automatically managed by CMake.
